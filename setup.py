@@ -1,8 +1,25 @@
 from setuptools import setup, find_packages
 
+package_name = "checkm2"
+version = None
+with open(path.join(script_directory, package_name, 'version.py')) as f:
+    for line in f.readlines():
+        line = line.strip()
+        if line.startswith("__version__"):
+            version = line.split("=")[-1].strip().strip('"')
+assert version is not None, f"Check version in {package_name}/version.py"
+
+requirements = list()
+with open(path.join(script_directory, 'requirements.txt')) as f:
+    for line in f.readlines():
+        line = line.strip()
+        if line:
+            if not line.startswith("#"):
+                requirements.append(line)
+
 setup(
     name='CheckM2',
-    version='1.0.2',
+    version='1.0.3rc1',
     packages=find_packages(),
     data_files=[('data', ['checkm2/data/feature_ordering.json', 'checkm2/data/kegg_path_category_mapping.json',
                           'checkm2/data/min_ref_rsdata_v1.npz', 'checkm2/data/module_definitions.json']),
@@ -13,7 +30,7 @@ setup(
     include_package_data=True,
     url='https://github.com/chklovski/CheckM2',
     license='',
-    install_requires=(),
+    install_requires=requirements,
     author='Alex Chklovski',
     scripts=['bin/checkm2'],
     author_email='chklovski@gmail.com',

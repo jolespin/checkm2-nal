@@ -1,0 +1,13 @@
+ scikit-learn>=1.0
+ h5py>=2.10.0
+ numpy>=1.19.2
+ #diamond=2.0.4
+ tensorflow >= 2.2.0, <2.6.0
+ lightgbm>=3.2.1
+ pandas>=1.0
+ scipy>=1.0
+ pyrodigal
+ setuptools
+ requests
+ packaging
+ tqdm
