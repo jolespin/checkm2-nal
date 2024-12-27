@@ -50,7 +50,7 @@ class ProdigalRunner():
         return median
 
 
-    def run(self, query, supplied_coding_table=None):
+    def run(self, query, supplied_coding_table=None, threads=1):
         bNucORFs = True
         prodigal_input = query
                   
@@ -98,17 +98,19 @@ class ProdigalRunner():
                 procedureStr = 'single'  # estimate parameters from data
 
             if bNucORFs:
-                cmd = ('prodigal -p %s -q -m -f gff -g %d -a %s -d %s -i %s > %s' % (procedureStr,
+                cmd = ('pyrodigal -p %s -q -m -f gff -g %d -a %s -d %s -i %s -j %d > %s' % (procedureStr,
                                                                                                   translationTable,
                                                                                                   aaGeneFile,
                                                                                                   ntGeneFile,
                                                                                                   prodigal_input,
+                                                                                                  threads,
                                                                                                   gffFile))
             else:
-                cmd = ('prodigal -p %s -q -m -f gff -g %d -a %s -i %s > %s' % (procedureStr,
+                cmd = ('pyrodigal -p %s -q -m -f gff -g %d -a %s -i %s -j %d > %s' % (procedureStr,
                                                                                             translationTable,
                                                                                             aaGeneFile,
                                                                                             prodigal_input,
+                                                                                            threads,
                                                                                             gffFile))
             os.system(cmd)
 
@@ -119,7 +121,7 @@ class ProdigalRunner():
                 try:
                     os.system(cmd)
                 except Exception as e:
-                    logging.error('An error occured while running prodigal: {}'.format(e))
+                    logging.error('An error occured while running pyrodigal: {}'.format(e))
                     sys.exit(1)
 
             # determine coding density
@@ -199,9 +201,9 @@ class ProdigalRunner():
         # Assume that a successful prodigal -h returns 0 and anything
         # else returns something non-zero
         try:
-            subprocess.call(['prodigal', '-h'], stdout=open(os.devnull, 'w'), stderr=subprocess.STDOUT)
+            subprocess.call(['pyrodigal', '-h'], stdout=open(os.devnull, 'w'), stderr=subprocess.STDOUT)
         except:
-            logging.error("Make sure prodigal is on your system path.")
+            logging.error("Make sure pyrodigal is on your system path.")
             sys.exit(1)
 
 class ProdigalFastaParser():

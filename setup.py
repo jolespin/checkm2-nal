@@ -1,4 +1,6 @@
 from setuptools import setup, find_packages
+from os import path
+script_directory = path.abspath(path.dirname(__file__))
 
 package_name = "checkm2"
 version = None

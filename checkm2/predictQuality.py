@@ -331,7 +331,7 @@ class Predictor():
             prodigal_thread = prodigal.ProdigalRunner(self.prodigal_folder, bin)
             binname, selected_coding_table, c_density, \
             v_N50, v_avg_gene_len, v_total_bases, v_cds_count, \
-            v_GC, v_totalContigs, v_maxContigLen = prodigal_thread.run(bin, ttable)
+            v_GC, v_totalContigs, v_maxContigLen = prodigal_thread.run(bin, ttable, threads=self.total_threads)
 
             used_ttable[binname] = selected_coding_table
             coding_density[binname] = c_density
